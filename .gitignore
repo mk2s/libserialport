@@ -20,3 +20,5 @@ Debug/
 Release/
 x64/
 *.vcxproj.user
+.zig-cache/
+zig-out/
