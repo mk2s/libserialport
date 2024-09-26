@@ -1,4 +1,1 @@
-.{ .name = "libserialport", .version = "0.1.1", .paths = .{
-    "build.zig",
-    "build.zig.zon",
-} }
+.{ .name = "libserialport", .version = "0.1.1", .paths = .{ "build.zig", "build.zig.zon", "libserialport.h", "serialport.c", "timing.c", "windows.c" } }
