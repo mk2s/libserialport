@@ -28,7 +28,7 @@ pub fn build(b: *std.Build) void {
     b.installArtifact(dynlib);
 
     const staticlib = b.addStaticLibrary(.{
-        .name = "libserialport",
+        .name = "libserialport.lib",
         .target = target,
         .optimize = optimize,
         .link_libc = true,
