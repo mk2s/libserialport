@@ -17,14 +17,24 @@ pub fn build(b: *std.Build) void {
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
 
-    const lib = b.addSharedLibrary(.{
+    const dynlib = b.addSharedLibrary(.{
+        .name = "libserialport",
+        .target = target,
+        .optimize = optimize,
+        .link_libc = true,
+    });
+    dynlib.addCSourceFiles(.{ .files = &.{ "serialport.c", "timing.c", "windows.c" }, .flags = flags });
+    dynlib.linkSystemLibrary("setupApi");
+    b.installArtifact(dynlib);
+
+    const staticlib = b.addStaticLibrary(.{
         .name = "libserialport",
         .target = target,
         .optimize = optimize,
         .link_libc = true,
     });
 
-    lib.addCSourceFiles(.{ .files = &.{ "serialport.c", "timing.c", "windows.c" }, .flags = flags });
-    b.installArtifact(lib);
-    lib.linkSystemLibrary("setupApi");
+    staticlib.addCSourceFiles(.{ .files = &.{ "serialport.c", "timing.c", "windows.c" }, .flags = flags });
+    staticlib.linkSystemLibrary("setupApi");
+    b.installArtifact(staticlib);
 }
